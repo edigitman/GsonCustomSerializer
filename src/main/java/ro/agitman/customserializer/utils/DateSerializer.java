@@ -21,7 +21,7 @@ public class DateSerializer implements JsonSerializer<Date> {
 
     @Override
     public JsonElement serialize(Date date, Type type, JsonSerializationContext jsc) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(JsonName.DATE_FORMAT);
         return new JsonPrimitive(sdf.format(date));
     }
 }

@@ -27,7 +27,7 @@ public class CustomSerializer implements JsonSerializer<AbstractSerializer> {
 
         JsonObject object = new JsonObject();
         String clazz = t.getClass().getName();
-        object.addProperty("ClazzName", clazz);
+        object.addProperty(JsonName.CLASS_NAME, clazz);
 
         Map<String, JsonElement> map = new HashMap<>();
         Class aClass = t.getClass();
@@ -41,7 +41,7 @@ public class CustomSerializer implements JsonSerializer<AbstractSerializer> {
           iae.printStackTrace();
         } 
         
-        object.add("Properties", jsc.serialize(map));
+        object.add(JsonName.PROPS, jsc.serialize(map));
         
         return object;
     }

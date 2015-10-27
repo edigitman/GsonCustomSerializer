@@ -21,15 +21,14 @@ public class DateDeserializer implements JsonDeserializer<Date> {
 
     @Override
     public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(JsonName.DATE_FORMAT);
         Date date = null;
         try {
             date = sdf.parse(json.getAsJsonPrimitive().getAsString());
             return date;
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
         }
-        return date;
     }
-
 }

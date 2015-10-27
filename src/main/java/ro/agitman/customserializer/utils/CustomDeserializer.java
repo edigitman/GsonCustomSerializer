@@ -26,7 +26,7 @@ public class CustomDeserializer implements JsonDeserializer<AbstractSerializer> 
     public AbstractSerializer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
         JsonObject jsonObject = json.getAsJsonObject();
-        String clazzName = jsonObject.get("ClazzName").getAsString();
+        String clazzName = jsonObject.get(JsonName.CLASS_NAME).getAsString();
         AbstractSerializer abstractSerializer = null;
         Class c = null;
         try {
@@ -37,13 +37,13 @@ public class CustomDeserializer implements JsonDeserializer<AbstractSerializer> 
         }
 
         if (abstractSerializer != null) {
-            JsonObject jObject = jsonObject.get("Properties").getAsJsonObject();
+            JsonObject jObject = jsonObject.get(JsonName.PROPS).getAsJsonObject();
 
             Map<String, Object> map = new HashMap<>();
             for (Map.Entry<String, JsonElement> entry : jObject.entrySet()) {
 
                 if (entry.getValue().isJsonObject()) {
-                    JsonElement clazzObj = entry.getValue().getAsJsonObject().get("ClazzName");
+                    JsonElement clazzObj = entry.getValue().getAsJsonObject().get(JsonName.CLASS_NAME);
                     if (clazzObj != null) {
                         String clazz = clazzObj.getAsString();
                         try {
@@ -54,9 +54,9 @@ public class CustomDeserializer implements JsonDeserializer<AbstractSerializer> 
                     }
                 } else {
                     if (entry.getValue().isJsonArray()) {
-                        List<AbstractSerializer> videos = context.deserialize(entry.getValue(), new TypeToken<List<AbstractSerializer>>() {
+                        List<AbstractSerializer> list = context.deserialize(entry.getValue(), new TypeToken<List<AbstractSerializer>>() {
                         }.getType());
-                        map.put(entry.getKey(), videos);
+                        map.put(entry.getKey(), list);
                     } else {
                         map.put(entry.getKey(), context.deserialize(entry.getValue(), Object.class));
                     }
@@ -69,7 +69,6 @@ public class CustomDeserializer implements JsonDeserializer<AbstractSerializer> 
                     field.setAccessible(true);
                     Object obj = map.get(field.getName());
 
-                   //todo try to convert type found to type requested
                     if (field.getType().equals(obj.getClass())) {
                         field.set(abstractSerializer, obj);
                     } else {
