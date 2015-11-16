@@ -5,6 +5,8 @@
  */
 package ro.agitman.customserializer.entity;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ import java.util.List;
  * @author gitmaal
  */
 public class A extends AbstractSerializer{
-    
+
     private String propStr;
     private Long propLong;
     private B propB;

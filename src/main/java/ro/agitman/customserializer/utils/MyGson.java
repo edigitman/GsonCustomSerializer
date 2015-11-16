@@ -23,7 +23,12 @@ public class MyGson {
     
     private MyGson() {
         gsonBuilder = new GsonBuilder();
+
         gsonBuilder.enableComplexMapKeySerialization();
+
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+
+        gsonBuilder.setPrettyPrinting();
 
         gsonBuilder.registerTypeAdapter(Date.class, new DateSerializer());
 
@@ -44,7 +49,8 @@ public class MyGson {
     }
     
     public Gson getGson(){
-        return gsonBuilder.create();
+        final Gson g = gsonBuilder.create();
+        return g;
     }
     
 }

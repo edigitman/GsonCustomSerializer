@@ -5,6 +5,8 @@
  */
 package ro.agitman.customserializer.entity;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +15,14 @@ import java.util.Map;
  * @author gitmaal
  */
 public class B extends AbstractSerializer{
-    
+
+    @Expose
     private String propString;
+    @Expose
     private C propC;
+    @Expose
     private Map<String, C> map = new HashMap<>();
+
     private Map<D, C> objMap = new HashMap<>();
 
     public String getPropString() {
